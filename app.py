@@ -4,9 +4,12 @@ import dash_html_components as html
 import pandas as pd
 import json
 import requests
+import dash_table
 
 response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
+
+
 
 l=['State/UT','Active','Deceased','Recovered']
 def generate_table(dataframe):
@@ -19,6 +22,7 @@ def generate_table(dataframe):
                 html.Td(todos['statewise'][i]['state']),
                 html.Td([
                     todos['statewise'][i]['active'],
+                    html.P('\U00002191'),
                     html.Sub(todos['statewise'][i]['deltaconfirmed'])
                     ]),
                 html.Td(todos['statewise'][i]['deaths']),
@@ -35,7 +39,6 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(children=[
     html.H4(children='covid19india'),
-    # html.P(children=(todos)),
     generate_table(todos)
 ])
 
