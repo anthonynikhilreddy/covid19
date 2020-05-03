@@ -26,6 +26,7 @@ navbar = dbc.Nav(className="nav nav-pills", children=[
     dbc.NavItem(dbc.NavLink('Trending', href="/Trending"), style={'font-size':'200%'}, className="my-2 my-sm-0")
 
 ])
+server = app.server
 inputs = dbc.FormGroup([
     html.H4("Select State"),
     dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
