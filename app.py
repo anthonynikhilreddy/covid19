@@ -6,11 +6,12 @@ from dash.dependencies import Input, Output
 import json
 import requests
 import os
+from flask import Flask, send_from_directory
 
 from func.func import func
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_DIR = os.path.join(BASE_DIR,"static")
+STATIC_DIR = os.path.join(BASE_DIR,"assets")
 
 response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
@@ -35,6 +36,7 @@ inputs = dbc.FormGroup([
 app.layout = dbc.Container(fluid=True,children=[
 		navbar,
     html.Br(),html.Br(),html.Br(),
+    # html.Link(rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>),
     dbc.Row([
         dbc.Col(md=3, children=[
             inputs, 
