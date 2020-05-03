@@ -12,7 +12,8 @@ import plotly.graph_objects as go
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR,"covid19/assets")
-# print(STATIC_DIR)
+assets_path = os.getcwd() +'/assets'
+print(assets_path)
 # <link rel="stylesheet" href="" integrity="" crossorigin="anonymous">
 
 
@@ -63,7 +64,7 @@ statelist=[]
 todos['statewise'][0]['state']='INDIA'
 for i in range(0,len(todos['statewise'])):
 	statelist.append(todos['statewise'][i]['state'])
-app = dash.Dash(__name__)
+app = dash.Dash(__name__,assets_folder=assets_path)
 # for css2 in external_css2:
 #     app.css.append_css({"external_url": css2})
 app.css.append_css({
