@@ -142,14 +142,3 @@ class func:
 		                  marker=dict(colors=colors,line=dict(color='#000000', width=2)))
 				fig.update_layout(title_text=state)
 		return fig
-	def india_pie(todos):
-		values=[]
-		for i in range(1,len(todos['statewise'])):
-			values.append(todos['statewise'][i]["active"])
-			# if(todos['statewise'][i]['state']==state):
-		fig = go.Figure(data=[go.Pie(labels=statelist,values=values,hole=.3, automargin=True)])
-		fig.update_traces(hoverinfo='label+value', textinfo='label', textfont_size=10,)
-                  # marker=dict(line=dict(color='#000000', width=2)))
-		fig.update_layout(title_text='Active Cases in India')
-		fig.update_layout(showlegend=False)
-		return fig

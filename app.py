@@ -55,8 +55,6 @@ app.layout = dbc.Container(fluid=True,children=[
     		], style={'width':'70%'}),
         dbc.Col(width={"offset": 3}, lg=3,md=2,children=[
             html.Div(dcc.Graph(id="state-pie")),
-            html.Br(),html.Br(),html.Br(),
-            html.Div(dcc.Graph(figure=func.india_pie(todos))),
         ]),
         
 
