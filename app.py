@@ -27,6 +27,7 @@ navbar = dbc.Nav(className="nav nav-pills", children=[
 
 ])
 server = app.server
+app.title = 'Covid-19 India'
 inputs = dbc.FormGroup([
     html.H4("Select State"),
     dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
