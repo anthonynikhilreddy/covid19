@@ -45,15 +45,21 @@ app.layout = dbc.Container(fluid=True,children=[
     
     # html.Link(rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>),
     dbc.Row([
-        dbc.Col(md=3, children=[
+        dbc.Col(lg=3,md=2, children=[
             inputs, 
             html.Br(),html.Br(),html.Br(),
             html.Div(id="output-panel")
         ]),
-    	dbc.Col(md=3,children=[
+    	dbc.Col(lg=3,md=2,children=[
     		html.Div(id="dist-panel")
-    		], style={'width':'100%'}),
-        dbc.Col(width={"offset": 2}, md=3,children=[html.Div(dcc.Graph(id="state-pie"))])
+    		], style={'width':'70%'}),
+        dbc.Col(width={"offset": 3}, lg=3,md=2,children=[
+            html.Div(dcc.Graph(id="state-pie")),
+            html.Br(),html.Br(),html.Br(),
+            html.Div(dcc.Graph(figure=func.india_pie(todos))),
+        ]),
+        
+
     ])
 ])
 @app.callback(dash.dependencies.Output('state-pie', 'figure'), inputs=[Input("state","value")])

@@ -11,6 +11,12 @@ import plotly.graph_objects as go
 colors = ['#007BFF','red','green']
 qqq=['District','Confirmed','Active','Deceased','Recovered']
 l=['State/UT','Confirmed','Active','Deceased','Recovered']
+statelist=[]
+# todos['statewise'][0]['state']='INDIA'
+response = requests.get("https://api.covid19india.org/data.json")
+todos = json.loads(response.text)
+for i in range(1,len(todos['statewise'])):
+	statelist.append(todos['statewise'][i]['state'])
 class func:
 	def __init__(self):
 		a="hello"
@@ -135,4 +141,15 @@ class func:
 				fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
 		                  marker=dict(colors=colors,line=dict(color='#000000', width=2)))
 				fig.update_layout(title_text=state)
+		return fig
+	def india_pie(todos):
+		values=[]
+		for i in range(1,len(todos['statewise'])):
+			values.append(todos['statewise'][i]["active"])
+			# if(todos['statewise'][i]['state']==state):
+		fig = go.Figure(data=[go.Pie(labels=statelist,values=values,hole=.3, automargin=True)])
+		fig.update_traces(hoverinfo='label+value', textinfo='label', textfont_size=10,)
+                  # marker=dict(line=dict(color='#000000', width=2)))
+		fig.update_layout(title_text='Active Cases in India')
+		fig.update_layout(showlegend=False)
 		return fig
