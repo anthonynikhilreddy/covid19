@@ -13,6 +13,49 @@ import plotly.graph_objects as go
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR,"assets")
 
+# <link rel="stylesheet" href="" integrity="" crossorigin="anonymous">
+
+
+# <script src="" integrity="" crossorigin="anonymous"></script>
+# <script src="" integrity="" crossorigin="anonymous"></script>
+# <script src="" integrity="" crossorigin="anonymous"></script>
+
+# external_scripts = [
+#     {
+#         'src': 'https://code.jquery.com/jquery-3.2.1.slim.min.js',
+#         'integrity': 'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN',
+#         'crossorigin': 'anonymous'
+#     },
+#     {
+#         'src': 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',
+#         'integrity': 'sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q',
+#         'crossorigin': 'anonymous'
+#     },
+#     {
+#         'src': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',
+#         'integrity': 'sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl',
+#         'crossorigin': 'anonymous'
+#     }
+# ]
+
+# external_stylesheets = [
+#     {
+#         'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+#         'rel': 'stylesheet',
+#         'integrity': 'sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm',
+#         'crossorigin': 'anonymous'
+#     }
+# ]
+
+external_css2 = ["./assets/bootstrap-grid.css",
+"./assets/bootstrap-reboot.css",
+"./assets/bootstrap.css",
+"./assets/font.css",
+
+]
+# for css2 in external_css2:
+#     app.css.append_css({"external_url": css2})
+
 response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
 
@@ -21,6 +64,8 @@ todos['statewise'][0]['state']='INDIA'
 for i in range(0,len(todos['statewise'])):
 	statelist.append(todos['statewise'][i]['state'])
 app = dash.Dash(__name__)
+for css2 in external_css2:
+    app.css.append_css({"external_url": css2})
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
