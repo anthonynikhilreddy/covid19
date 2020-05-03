@@ -10,6 +10,12 @@ from flask import Flask, send_from_directory
 
 from func.func import func
 
+import plotly.graph_objects as go
+# colors = ['gold', 'mediumturquoise', 'darkorange', 'lightgreen']
+
+
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR,"assets")
 
@@ -36,6 +42,7 @@ inputs = dbc.FormGroup([
 app.layout = dbc.Container(fluid=True,children=[
 		navbar,
     html.Br(),html.Br(),html.Br(),
+    
     # html.Link(rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>),
     dbc.Row([
         dbc.Col(md=3, children=[
@@ -45,9 +52,13 @@ app.layout = dbc.Container(fluid=True,children=[
         ]),
     	dbc.Col(md=3,children=[
     		html.Div(id="dist-panel")
-    		])
+    		], style={'width':'100%'}),
+        dbc.Col(width={"offset": 2}, md=3,children=[html.Div(dcc.Graph(id="state-pie"))])
     ])
 ])
+@app.callback(dash.dependencies.Output('state-pie', 'figure'), inputs=[Input("state","value")])
+def state_pie(state):
+    return func.state_pie(state,todos)
 @app.callback(output=Output("output-panel","children"), inputs=[Input("state","value")])
 def render_output_panel(state):
 	return func.disp_panel(state,todos)

@@ -7,6 +7,8 @@ import requests
 import dash_table
 from shapely.geometry import Point, Polygon
 import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
+colors = ['#007BFF','red','green']
 qqq=['District','Confirmed','Active','Deceased','Recovered']
 l=['State/UT','Confirmed','Active','Deceased','Recovered']
 class func:
@@ -118,3 +120,19 @@ class func:
 	        ])
 	        ])
 		return panel
+	def state_pie(state,todos):
+		fig = go.Figure(data=[go.Pie(labels=['Active','Deceased','Recovered'],
+		                             values=[todos['statewise'][0]['active'],todos['statewise'][0]['deaths'],
+		                             todos['statewise'][0]['recovered']],hole=.3)])
+		fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
+		                  marker=dict(colors=colors,line=dict(color='#000000', width=2)))
+		fig.update_layout(title_text='INDIA')
+		for i in range(1,len(todos['statewise'])):
+			if(todos['statewise'][i]['state']==state):
+				fig = go.Figure(data=[go.Pie(labels=['Active','Deceased','Recovered'],
+		                             values=[todos['statewise'][i]['active'],todos['statewise'][i]['deaths'],
+		                             todos['statewise'][i]['recovered']],hole=.3)])
+				fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
+		                  marker=dict(colors=colors,line=dict(color='#000000', width=2)))
+				fig.update_layout(title_text=state)
+		return fig
