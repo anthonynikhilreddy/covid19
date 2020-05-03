@@ -11,8 +11,8 @@ from func.func import func
 import plotly.graph_objects as go
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_DIR = os.path.join(BASE_DIR,"assets")
-
+STATIC_DIR = os.path.join(BASE_DIR,"covid19/assets")
+# print(STATIC_DIR)
 # <link rel="stylesheet" href="" integrity="" crossorigin="anonymous">
 
 
@@ -64,8 +64,11 @@ todos['statewise'][0]['state']='INDIA'
 for i in range(0,len(todos['statewise'])):
 	statelist.append(todos['statewise'][i]['state'])
 app = dash.Dash(__name__)
-for css2 in external_css2:
-    app.css.append_css({"external_url": css2})
+# for css2 in external_css2:
+#     app.css.append_css({"external_url": css2})
+app.css.append_css({
+    "external_url":"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    })
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
