@@ -26,12 +26,6 @@ navbar = dbc.Nav(className="nav nav-pills", children=[
     dbc.NavItem(dbc.NavLink('Trending', href="/Trending"), style={'font-size':'200%'}, className="my-2 my-sm-0")
 
 ])
-app.head = [
-    html.Link(
-        href='https://www.google.com/favicon.ico',
-        rel='icon'
-    ),
-]
 inputs = dbc.FormGroup([
     html.H4("Select State"),
     dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
@@ -53,7 +47,6 @@ app.layout = dbc.Container(fluid=True,children=[
 @app.callback(output=Output("output-panel","children"), inputs=[Input("state","value")])
 def render_output_panel(state):
 	return func.disp_panel(state,todos)
-	# return panel
 stateresponse = requests.get("https://api.covid19india.org/v2/state_district_wise.json")
 dist = json.loads(stateresponse.text)
 @app.callback(output=Output("dist-panel","children"), inputs=[Input("state","value")])
