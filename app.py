@@ -20,7 +20,7 @@ statelist=[]
 todos['statewise'][0]['state']='INDIA'
 for i in range(0,len(todos['statewise'])):
 	statelist.append(todos['statewise'][i]['state'])
-app = dash.Dash(assets_folder=STATIC_DIR)
+app = dash.Dash(__name__,assets_folder=STATIC_DIR)
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
