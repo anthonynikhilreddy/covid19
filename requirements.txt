@@ -27,6 +27,7 @@ future==0.18.2
 geojsonio==0.0.3
 geopandas==0.7.0
 github3.py==1.3.0
+gunicorn==20.0.4
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
