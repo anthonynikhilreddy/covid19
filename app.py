@@ -51,8 +51,12 @@ for i in range(0,len(todos['statewise'])):
     statelist.append(todos['statewise'][i]['state'])
 app = dash.Dash(__name__,assets_folder=STATIC_DIR,
                 external_scripts=external_scripts,
-                external_stylesheets=external_stylesheets)
-
+                external_stylesheets=external_stylesheets,meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+    ])
+# app = dash.Dash(
+    
+# )
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
