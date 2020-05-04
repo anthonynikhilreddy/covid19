@@ -18,6 +18,7 @@ from func.func import func
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # STATIC_DIR = os.path.join(BASE_DIR,"static")
 STATIC_DIR = os.path.join(BASE_DIR,"assets")
+# print(STATIC_DIR)
 
 # external JavaScript files
 external_scripts = [
@@ -48,7 +49,7 @@ statelist=[]
 todos['statewise'][0]['state']='INDIA'
 for i in range(0,len(todos['statewise'])):
     statelist.append(todos['statewise'][i]['state'])
-app = dash.Dash(__name__,
+app = dash.Dash(__name__,assets_folder=STATIC_DIR,
                 external_scripts=external_scripts,
                 external_stylesheets=external_stylesheets)
 
@@ -67,6 +68,7 @@ navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justi
             ])
         ]),
     ])
+server = app.server
 app.title = 'Covid-19 India'
 inputs = html.Form([
     html.H4("Select State"),
