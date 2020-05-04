@@ -1,7 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-# import dash_bootstrap_components as dbc
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import json
 import requests
@@ -22,22 +22,38 @@ STATIC_DIR = os.path.join(BASE_DIR,"assets")
 
 # external JavaScript files
 external_scripts = [
-    'https://www.google-analytics.com/analytics.js',
-    {'src': 'https://cdn.polyfill.io/v2/polyfill.min.js'},
+    # 'https://www.google-analytics.com/analytics.js',
+    # {'src': 'https://cdn.polyfill.io/v2/polyfill.min.js'},
+    # {
+    #     'src': 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js',
+    #     'integrity': 'sha256-Qqd/EfdABZUcAxjOkMi8eGEivtdTkh3b65xCZL4qAQA=',
+    #     'crossorigin': 'anonymous'
+    # },
     {
-        'src': 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js',
-        'integrity': 'sha256-Qqd/EfdABZUcAxjOkMi8eGEivtdTkh3b65xCZL4qAQA=',
-        'crossorigin': 'anonymous'
+      "src":"https://code.jquery.com/jquery-3.4.1.slim.min.js",
+      "integrity":"sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n",
+      "crossorigin":"anonymous"
+    },
+    {
+        "src":"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js",
+        "integrity":"sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6",
+        "crossorigi":"anonymous"
+    },
+    {
+    "src":"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js",
+    "integrity":"sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo",
+    "crossorigin":"anonymous"
     }
+
 ]
 
 # external CSS stylesheets
 external_stylesheets = [
     # 'https://codepen.io/chriddyp/pen/bWLwgP.css',
     {
-        'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+        'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
         'rel': 'stylesheet',
-        'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
+        'integrity': 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh',
         'crossorigin': 'anonymous'
     }
 ]
@@ -57,21 +73,31 @@ app = dash.Dash(__name__,assets_folder=STATIC_DIR,
 # app = dash.Dash(
     
 # )
-navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
-    html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
-    html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
-        **{"aria-controls":"navbarNavDropdown"}, **{"aria-label":"Toggle navigation"}, children=[
-        html.Span(className="navbar-toggler-icon"),
-        ]),
-    html.Div(className="collapse navbar-collapse", **{"id":"navbarNavDropdown"}, children=[
-        html.Ul(className="navbar-nav ml-auto",children=[
-            html.Li(className='nav-item active', children=[
-                html.A("Home",className='nav-link', href="#")], style={'font-size':'150%'}),
-            html.Li(className='nav-item', children=[
-                html.A("Trending",className='nav-link', href="#")], style={'font-size':'150%'}),
-            ])
-        ]),
-    ])
+# navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
+#     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
+#     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarSupportedContent"}, **{"aria-expanded":"false"}, 
+#         **{"aria-controls":"navbarSupportedContent"}, **{"aria-label":"Toggle navigation"}, children=[
+#         html.Span(className="navbar-toggler-icon"),
+#         ]),
+#     html.Div(className="collapse navbar-collapse", **{"id":"navbarSupportedContent"}, children=[
+#         html.Ul(className="navbar-nav ml-auto",children=[
+#             html.Li(className='nav-item active', children=[
+#                 html.A("Home",className='nav-link', href="#")], style={'font-size':'150%'}),
+#             html.Li(className='nav-item', children=[
+#                 html.A("Trending",className='nav-link', href="#")], style={'font-size':'150%'}),
+#             ])
+#         ]),
+#     ])
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Home", href="#")),
+        dbc.NavItem(dbc.NavLink("Trending", href="#")),
+    ],
+    brand="Covid-19 Tracker",
+    brand_href="#",
+    dark=False,
+    style={"font-size":"120%"}
+)
 server = app.server
 app.title = 'Covid-19 India'
 inputs = html.Form([
