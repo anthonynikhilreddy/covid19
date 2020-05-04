@@ -17,6 +17,9 @@ response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
 for i in range(1,len(todos['statewise'])):
 	statelist.append(todos['statewise'][i]['state'])
+url = ('http://newsapi.org/v2/top-headlines?country=in&q=corona&apiKey=4392327483d240b98d82f709d314b7a1')
+news = requests.get(url)
+newsresponse=news.json()
 class func:
 	def __init__(self):
 		a="hello"
@@ -145,6 +148,26 @@ class func:
 	            html.H3(recovered_until_today, style={"color":"green"}),
 	        ], style={'background-color': 'black'})
 	        ])
+		return panel
+	def news_panel(state):
+		newstitles=[]
+		newsurls=[]
+		newssources=[]
+		news=[]
+		for i in range(len(newsresponse['articles'])):
+			news.append(html.Tr(children=[
+				# html.Button(newsresponse['articles'][i]['title'].split('-')[0],**{"onclick":newsresponse['articles'][i]['url']}),
+				html.A(newsresponse['articles'][i]['title'],href=newsresponse['articles'][i]['url']),
+				# html.A(newsresponse['articles'][i]['title'].split('-')[0],href=newsresponse['articles'][i]['url']),
+				html.Br(),
+
+				html.Br()
+				])
+			)
+		panel = html.Div(className='alert alert-primary',children=[
+			# html.Div(children=[html.H4(state[0].upper()+state[1:].lower()+" News")]),
+			html.Div(children=[html.H4("News")]),
+			html.Div(news)])
 		return panel
 	def state_pie(state):
 		fig = go.Figure(data=[go.Pie(labels=['Active','Deceased','Recovered'],

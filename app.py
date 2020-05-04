@@ -73,32 +73,28 @@ app = dash.Dash(__name__,assets_folder=STATIC_DIR,
 # app = dash.Dash(
     
 # )
-# navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
-#     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
-#     html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarSupportedContent"}, **{"aria-expanded":"false"}, 
-#         **{"aria-controls":"navbarSupportedContent"}, **{"aria-label":"Toggle navigation"}, children=[
-#         html.Span(className="navbar-toggler-icon"),
-#         ]),
-#     html.Div(className="collapse navbar-collapse", **{"id":"navbarSupportedContent"}, children=[
-#         html.Ul(className="navbar-nav ml-auto",children=[
-#             html.Li(className='nav-item active', children=[
-#                 html.A("Home",className='nav-link', href="#")], style={'font-size':'150%'}),
-#             html.Li(className='nav-item', children=[
-#                 html.A("Trending",className='nav-link', href="#")], style={'font-size':'150%'}),
-#             ])
-#         ]),
-#     ])
-navbar = dbc.NavbarSimple(
-    children=[
-        dbc.NavItem(dbc.NavLink("Home", href="#")),
-        dbc.NavItem(dbc.NavLink("Trending", href="#")),
-    ],
-    brand="Covid-19 Tracker",
-    brand_href="#",
-    dark=False,
-    style={"font-size":"120%"}
-)
-server = app.server
+navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
+    html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
+    # html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
+    #     **{"aria-controls":"navbarNavDropdown"}, **{"aria-label":"Toggle navigation"}, children=[
+    #     html.Span(className="navbar-toggler-icon"),
+    #     ]),
+        html.Ul(className="navbar-nav ml-auto",children=[
+            html.Li(className='d-none d-md-block nav-item active', children=[
+                html.A("Spring Boot Version",className='nav-link', href="https://knowcovid19india.herokuapp.com/")], style={'font-size':'150%'}),
+            ])
+    ])
+# navbar = dbc.NavbarSimple(
+#     # children=[
+#     #     dbc.NavItem(dbc.NavLink("Home", href="#")),
+#     #     dbc.NavItem(dbc.NavLink("Trending", href="/q.py")),
+#     # ],
+#     brand="Covid-19 Tracker",
+#     brand_href="#",
+#     dark=False,
+#     style={"font-size":"120%", 'border-radius':'2px', 'border':'1px solid gray'}
+# )
+# <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 app.title = 'Covid-19 India'
 inputs = html.Form([
     html.H4("Select State"),
@@ -108,7 +104,9 @@ inputs = html.Form([
     html.H4("Select State"),
     dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
 ])
-app.layout = html.Div(className='container',children=[
+app.layout = html.Div([
+    html.Div(className='container-fluid',children=[
+    # html.Br(),
         navbar,
         html.Br(),
         html.Div(id="time-panel"),
@@ -124,19 +122,23 @@ app.layout = html.Div(className='container',children=[
                 html.P("Source: "),
                 html.A("api.covid19india.org",href="api.covid19india.org"),
                 ]),
-        ]),
-        html.Div(className='col-lg-6 col-md-6 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
-            html.Div(id="dist-panel")]),
+            html.Div(id="news-panel"),
             ]),
-        html.Div(className='col-lg-3 col-md-3',children=[
-                html.Div(dcc.Graph(id="state-pie", responsive=True))
+        html.Div(className='col-lg-6 col-md-3 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
+            html.Div(id="dist-panel")], style={'border-radius':'2px'}),
+            ]),
+        html.Div(className='d-none d-md-block col-lg-3 col-md-3 col-sm-12',children=[
+                html.Div(dcc.Graph(id="state-pie", responsive=True)),
+                # html.Div(dcc.Graph(figure=fig,stysle={'overflowX': 'scroll'}))
                 ]),
-        
-
     ])
 ])
+    ])
+@app.callback(output=Output("news-panel","children"), inputs=[Input("state","value")])
+def news(state):
+    return func.news_panel(state)
 @app.callback(output=Output("time-panel","children"), inputs=[Input("state","value")])
-def state_pie(state):
+def last_updated(state):
     return func.last_updated(state)
 @app.callback(dash.dependencies.Output('state-pie', 'figure'), inputs=[Input("state","value")])
 def state_pie(state):
