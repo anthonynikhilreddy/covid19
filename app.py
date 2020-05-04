@@ -73,6 +73,7 @@ app = dash.Dash(__name__,assets_folder=STATIC_DIR,
 # app = dash.Dash(
     
 # )
+server=app.server
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
     # html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
@@ -131,6 +132,11 @@ app.layout = html.Div([
                 html.Div(dcc.Graph(id="state-pie", responsive=True)),
                 # html.Div(dcc.Graph(figure=fig,stysle={'overflowX': 'scroll'}))
                 ]),
+        # html.P(className='alert alert-info',children=[
+        #         # html.P("Source: "),
+        #         # html.A("api.covid19india.org",href="api.covid19india.org"),
+        #         html.Footer("Made by Anthony",style={'align':'center','margin':'auto'})
+        #         ])
     ])
 ])
     ])
