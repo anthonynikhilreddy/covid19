@@ -7,10 +7,17 @@ import json
 import requests
 import os
 # import pathlib as pl
-# from flask import Flask, send_from_directory
-from func.func import func
-import plotly.graph_objects as go
+# # from flask import Flask, send_from_directory
+# from func.func import func
+# import plotly.graph_objects as go
 
+from flask import Flask, send_from_directory
+
+from func.func import func
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# STATIC_DIR = os.path.join(BASE_DIR,"static")
+STATIC_DIR = os.path.join(BASE_DIR,"assets")
 
 # external JavaScript files
 external_scripts = [
