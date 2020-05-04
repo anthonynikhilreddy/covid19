@@ -124,12 +124,11 @@ app.layout = html.Div(className='container',children=[
                 html.P("Source: "),
                 html.A("api.covid19india.org",href="api.covid19india.org"),
                 ]),
-            
         ]),
-        html.Div(className='col-lg-3 col-md-3 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
+        html.Div(className='col-lg-6 col-md-6 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
             html.Div(id="dist-panel")]),
             ]),
-        html.Div(className='offset-3 col-lg-3 col-md-3 col-sm-12',children=[
+        html.Div(className='col-lg-3 col-md-3',children=[
                 html.Div(dcc.Graph(id="state-pie", responsive=True))
                 ]),
         

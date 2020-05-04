@@ -73,9 +73,8 @@ class func:
 				rows.append(html.Tr(row,style={'background-color':'#F1F1F1'}))
 			else:
 				rows.append(html.Tr(row))
-		panel = html.Div(children=[html.H4("INDIA"),html.Div([dbc.Table([html.Thead(html.Tr([html.Th(_) for _ in l]))] + (rows))])])
+		panel = html.Div(children=[html.H4("INDIA"),html.Div([dbc.Table([html.Thead(html.Tr([html.Th(_) for _ in l]))] + (rows), style={'border-collapse':'collapse', 'overflow':'auto', "border":"none"})])], style={"width":"90%"})
 		return panel
-
 	def dist_table(dist,state):
 		rows=[]
 		for _ in range(len(dist)):
@@ -119,7 +118,7 @@ class func:
 					else:
 						rows.append(html.Tr(row))
 				break
-		panel = html.Div(children=[html.H4(state),html.Div([dbc.Table([html.Thead(html.Tr([html.Th(_) for _ in qqq]))] + (rows), style={'border-collapse':'collapse', 'overflow':'auto'})])])
+		panel = html.Div(children=[html.H4(state),html.Div([dbc.Table([html.Thead(html.Tr([html.Th(_) for _ in qqq]))] + (rows), style={'border-collapse':'collapse', 'overflow':'auto', "border":"none"})])],style={"width":"90%"})
 		return panel
 	def disp_panel(state):
 		total_cases_until_today=(todos['statewise'][0]['confirmed'])
