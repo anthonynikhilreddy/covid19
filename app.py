@@ -6,29 +6,14 @@ from dash.dependencies import Input, Output
 import json
 import requests
 import os
-# import pathlib as pl
-# # from flask import Flask, send_from_directory
-# from func.func import func
-# import plotly.graph_objects as go
-
-from flask import Flask, send_from_directory
 
 from func.func import func
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# STATIC_DIR = os.path.join(BASE_DIR,"static")
 STATIC_DIR = os.path.join(BASE_DIR,"assets")
-# print(STATIC_DIR)
 
-# external JavaScript files
+## external scripts
 external_scripts = [
-    # 'https://www.google-analytics.com/analytics.js',
-    # {'src': 'https://cdn.polyfill.io/v2/polyfill.min.js'},
-    # {
-    #     'src': 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js',
-    #     'integrity': 'sha256-Qqd/EfdABZUcAxjOkMi8eGEivtdTkh3b65xCZL4qAQA=',
-    #     'crossorigin': 'anonymous'
-    # },
     {
       "src":"https://code.jquery.com/jquery-3.4.1.slim.min.js",
       "integrity":"sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n",
@@ -46,10 +31,8 @@ external_scripts = [
     }
 
 ]
-
-# external CSS stylesheets
+## external stylesheets
 external_stylesheets = [
-    # 'https://codepen.io/chriddyp/pen/bWLwgP.css',
     {
         'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
         'rel': 'stylesheet',
@@ -58,60 +41,40 @@ external_stylesheets = [
     },
 ]
 
-response = requests.get("https://api.covid19india.org/data.json")
-todos = json.loads(response.text)
-
-statelist=[]
-todos['statewise'][0]['state']='INDIA'
-for i in range(1,len(todos['statewise'])):
-    statelist.append(todos['statewise'][i]['state'])
+## creating the dash object
 app = dash.Dash(__name__,assets_folder=STATIC_DIR,
-                external_scripts=external_scripts,
-                external_stylesheets=external_stylesheets,meta_tags=[
-        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+            external_scripts=external_scripts,
+            external_stylesheets=external_stylesheets,
+            meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
-# app = dash.Dash(
-    
-# )
+
 server=app.server
+
+app.title = 'Covid-19 India'
 navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justify-content-between", children=[
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
-    # html.Button(className="navbar-toggler", **{"data-toggle":"collapse"}, **{"data-target":"#navbarNavDropdown"}, **{"aria-expanded":"false"}, 
-    #     **{"aria-controls":"navbarNavDropdown"}, **{"aria-label":"Toggle navigation"}, children=[
-    #     html.Span(className="navbar-toggler-icon"),
-    #     ]),
         html.Ul(className="navbar-nav ml-auto",children=[
             html.Li(className='d-none d-md-block nav-item active', children=[
                 html.A(children=[html.H3("Spring Boot Version"),html.H6("By Abhinav")],className='nav-link', href="https://knowcovid19india.herokuapp.com/")], style={'font-size':'150%'}),
             ])
     ])
-# navbar = dbc.NavbarSimple(
-#     # children=[
-#     #     dbc.NavItem(dbc.NavLink("Home", href="#")),
-#     #     dbc.NavItem(dbc.NavLink("Trending", href="/q.py")),
-#     # ],
-#     brand="Covid-19 Tracker",
-#     brand_href="#",
-#     dark=False,
-#     style={"font-size":"120%", 'border-radius':'2px', 'border':'1px solid gray'}
-# )
-# <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-app.title = 'Covid-19 India'
-inputs = html.Form([
-    html.H4("Select State"),
-    dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
-])
+
+response = requests.get("https://api.covid19india.org/data.json")
+todos = json.loads(response.text)
+statelist=[]
+todos['statewise'][0]['state']='INDIA'
+for i in range(1,len(todos['statewise'])):
+    statelist.append(todos['statewise'][i]['state'])
+statelist.sort()
 inputs = html.Form([
     html.H4("Select State"),
     dcc.Dropdown(id="state", options=[{"label":x,"value":x} for x in statelist], value="INDIA",clearable=False)
 ])
 app.layout = html.Div([
     html.Div(className='container-fluid',children=[
-    # html.Br(),
         navbar,
         html.Br(),
         html.Div(id="time-panel"),
-        # html.Br(),
     html.Div(className='row',children=[
         html.Div(className='col-lg-3 col-md-3 col-sm-12', children=[
             inputs, 
@@ -120,11 +83,6 @@ app.layout = html.Div([
             html.Div(id="output-panel"),
             html.Br(),
             html.Div(id="news-panel"),
-            # html.P(className='alert alert-info',children=[
-            #     html.P("Source: "),
-            #     html.A("api.covid19india.org",href="api.covid19india.org"),
-            #     ]),
-            
             ]),
         html.Div(className='col-lg-6 col-md-3 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
             html.Div(id="dist-panel")], style={'border-radius':'2px'}),
@@ -136,9 +94,6 @@ app.layout = html.Div([
                         html.Br(),
                         html.P(children=["Source: ",html.A("api.covid19india.org",href="https://api.covid19india.org")]),
                         ]),
-                        # html.P("Source: "),
-                        # html.A("api.covid19india.org",href="api.covid19india.org"),
-                        
                         ])
                 ])
             ],style={"width":"90%","margin-left":"4px","background-color":"#F8F9FA"})
@@ -151,7 +106,7 @@ app.layout = html.Div([
     ]),
 
     ])
-    ])
+])
 @app.callback(output=Output("news-panel","children"), inputs=[Input("state","value")])
 def news(state):
     return func.news_panel(state)

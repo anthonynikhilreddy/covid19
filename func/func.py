@@ -20,8 +20,7 @@ url = ('http://newsapi.org/v2/top-headlines?country=in&q=corona&apiKey=439232748
 news = requests.get(url)
 newsresponse=news.json()
 class func:
-	def __init__(self):
-		a="hello"
+	# def __init__(self)
 	def last_updated(state):
 		todos['statewise'][0]['state']='INDIA'
 		for i in range(0,len(todos['statewise'])):
@@ -175,16 +174,12 @@ class func:
 		news=[]
 		for i in range(len(newsresponse['articles'])):
 			news.append(html.Tr(children=[
-				# html.Button(newsresponse['articles'][i]['title'].split('-')[0],**{"onclick":newsresponse['articles'][i]['url']}),
 				html.A(newsresponse['articles'][i]['title'],href=newsresponse['articles'][i]['url']),
-				# html.A(newsresponse['articles'][i]['title'].split('-')[0],href=newsresponse['articles'][i]['url']),
 				html.Br(),
-
 				html.Br()
 				])
 			)
 		panel = html.Div(className='alert alert-primary',children=[
-			# html.Div(children=[html.H4(state[0].upper()+state[1:].lower()+" News")]),
 			html.Div(children=[html.H4("News")]),
 			html.Div(news)])
 		return panel
