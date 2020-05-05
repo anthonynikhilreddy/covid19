@@ -138,6 +138,9 @@ class func:
 				active_cases_until_today=(todos['statewise'][i]['active'])
 				deaths_until_today=(todos['statewise'][i]['deaths'])
 				recovered_until_today=(todos['statewise'][i]['recovered'])
+				delta_total_cases_until_today=(todos['statewise'][i]['deltaconfirmed'])
+				delta_deaths_until_today=(todos['statewise'][i]['deltadeaths'])
+				delta_recovered_until_today=(todos['statewise'][i]['deltarecovered'])
 				break
 		panel = html.Div([
 			html.H4(state),
