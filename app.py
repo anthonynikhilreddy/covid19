@@ -55,6 +55,10 @@ external_stylesheets = [
         'rel': 'stylesheet',
         'integrity': 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh',
         'crossorigin': 'anonymous'
+    },
+    {
+        'href': 'https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
+        'rel': 'stylesheet'
     }
 ]
 
@@ -82,7 +86,7 @@ navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justi
     #     ]),
         html.Ul(className="navbar-nav ml-auto",children=[
             html.Li(className='d-none d-md-block nav-item active', children=[
-                html.A("Spring Boot Version",className='nav-link', href="https://knowcovid19india.herokuapp.com/")], style={'font-size':'150%'}),
+                html.A(children=[html.H3("Spring Boot Version"),html.H6("By Abhinav")],className='nav-link', href="https://knowcovid19india.herokuapp.com/")], style={'font-size':'150%'}),
             ])
     ])
 # navbar = dbc.NavbarSimple(
@@ -111,7 +115,7 @@ app.layout = html.Div([
         navbar,
         html.Br(),
         html.Div(id="time-panel"),
-        html.Br(),
+        # html.Br(),
     html.Div(className='row',children=[
         html.Div(className='col-lg-3 col-md-3 col-sm-12', children=[
             inputs, 
@@ -119,26 +123,38 @@ app.layout = html.Div([
             html.Br(),
             html.Div(id="output-panel"),
             html.Br(),
-            html.P(className='alert alert-info',children=[
-                html.P("Source: "),
-                html.A("api.covid19india.org",href="api.covid19india.org"),
-                ]),
             html.Div(id="news-panel"),
+            # html.P(className='alert alert-info',children=[
+            #     html.P("Source: "),
+            #     html.A("api.covid19india.org",href="api.covid19india.org"),
+            #     ]),
+            
             ]),
         html.Div(className='col-lg-6 col-md-3 col-sm-12',children=[html.Div(className='table-responsive-sm',children=[
             html.Div(id="dist-panel")], style={'border-radius':'2px'}),
-            ]),
+            html.Div(className="row alert",children=[
+                html.Div(children=[
+                html.P(children=[
+                    html.P(children=[
+                        html.Div(children=["Made with ",html.Span("\u2665",style={"color":"red"})," by ",html.A("Anthony",href="https://www.linkedin.com/in/anthonynikhilreddy/",style={'color':'black',"font-weight":"bold"})]),
+                        html.Br(),
+                        html.P(children=["Source: ",html.A("api.covid19india.org",href="https://api.covid19india.org")]),
+                        ]),
+                        # html.P("Source: "),
+                        # html.A("api.covid19india.org",href="api.covid19india.org"),
+                        
+                        ])
+                ])
+            ],style={"width":"90%","margin-left":"4px","background-color":"#F8F9FA"})
+            ],
+
+            ),
         html.Div(className='d-none d-md-block col-lg-3 col-md-3 col-sm-12',children=[
                 html.Div(dcc.Graph(id="state-pie", responsive=True)),
-                # html.Div(dcc.Graph(figure=fig,stysle={'overflowX': 'scroll'}))
                 ]),
-        # html.P(className='alert alert-info',children=[
-        #         # html.P("Source: "),
-        #         # html.A("api.covid19india.org",href="api.covid19india.org"),
-        #         html.Footer("Made by Anthony",style={'align':'center','margin':'auto'})
-        #         ])
+    ]),
+
     ])
-])
     ])
 @app.callback(output=Output("news-panel","children"), inputs=[Input("state","value")])
 def news(state):

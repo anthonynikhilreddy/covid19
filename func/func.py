@@ -12,7 +12,6 @@ colors = ['#007BFF','red','green']
 qqq=['District','Confirmed','Active','Deceased','Recovered']
 l=['State/UT','Confirmed','Active','Deceased','Recovered']
 statelist=[]
-# todos['statewise'][0]['state']='INDIA'
 response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
 for i in range(1,len(todos['statewise'])):
@@ -31,14 +30,14 @@ class func:
 				if(int(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])==0):
 					s=s+"12:"+str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[1])+"AM"
 				elif(int(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])<12):
-					s=s+str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[1])+ \
+					s=s+str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])+":"+ \
 					str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[1])+"AM"
 				elif(int(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])==12):
 					s=s+"12:"+str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[1])+"PM"
 				elif(int(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])>12):
 					s=s+str(int(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[0])-12)+":"+ \
 					str(todos['statewise'][i]['lastupdatedtime'].split(' ')[1].split(':')[1])+"PM"
-				return html.P(className="alert alert-primary",**{"role":"alert"}, children=["Last updated on "+todos['statewise'][i]['lastupdatedtime'].split(' ')[0]+" at "+s], style={"textAlign":"center","font-size":"120%"})
+				return html.P(className="alert alert-light",**{"role":"alert"}, children=["Last updated on "+todos['statewise'][i]['lastupdatedtime'].split(' ')[0]+" at "+s], style={"textAlign":"center","font-size":"120%"})
 	def state_table():
 		rows=[]
 		for i in range(1,len(todos['statewise'])):
