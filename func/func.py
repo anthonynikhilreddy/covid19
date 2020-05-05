@@ -124,9 +124,15 @@ class func:
 		return panel
 	def disp_panel(state):
 		total_cases_until_today=(todos['statewise'][0]['confirmed'])
+		delta_total_cases_until_today=(todos['statewise'][0]['deltaconfirmed'])
 		active_cases_until_today=(todos['statewise'][0]['active'])
 		deaths_until_today=(todos['statewise'][0]['deaths'])
+		delta_deaths_until_today=(todos['statewise'][0]['deltadeaths'])
 		recovered_until_today=(todos['statewise'][0]['recovered'])
+		delta_recovered_until_today=(todos['statewise'][0]['deltarecovered'])
+		tests_until_today=(todos['tested'][-1]['totalsamplestested'])
+		delta_tests=int(todos['tested'][-1]['totalsamplestested'])-int(todos['tested'][-2]['totalsamplestested'])
+		date=todos['tested'][-1]['updatetimestamp'].split(' ')[0]
 		for i in range(1,len(todos['statewise'])):
 			if(todos['statewise'][i]['state']==state):
 				total_cases_until_today=(todos['statewise'][i]['confirmed'])
@@ -138,13 +144,27 @@ class func:
 			html.H4(state),
 	        dbc.Card(body=True, children=[
 	            html.H6("Total cases until today:", style={"color":"white"}),
-	            html.H3(total_cases_until_today, style={"color":"white"}),
+	            html.Div(children=[
+	            	html.H3(children=[total_cases_until_today,html.H6('\u0020'+'\u0020'+'\u2191'+delta_total_cases_until_today, style={"display":"inline"})]),
+	            	], 
+	            	style={"color":"white"}),
 	            html.H6("Active cases until today:", className="text-danger"),
 	            html.H3(active_cases_until_today, className="text-danger"),
-	            html.H6("Deaths until today:", style={"color":"gray"}),
-	            html.H3(deaths_until_today, style={"color":"gray"}),
-	            html.H6("Recovries until today:", style={"color":"green"}),
-	            html.H3(recovered_until_today, style={"color":"green"}),
+	            html.Div(children=[
+	            	html.H6("Deaths until today:", style={"color":"gray"}),
+	            	html.H3(children=[deaths_until_today,html.H6('\u0020'+'\u0020'+'\u2191'+delta_deaths_until_today, style={"display":"inline"})]),
+	            	], 
+	            	style={"color":"gray"}),
+	            html.Div(children=[
+	            	html.H6("Recovries until today:", style={"color":"green"}),
+	            	html.H3(children=[recovered_until_today,html.H6('\u0020'+'\u0020'+'\u2191'+delta_recovered_until_today, style={"display":"inline"})]),
+	            	], 
+	            	style={"color":"green"}),
+	            html.Div(children=[
+	            	html.H6("Samples tested until "+date+" (India):", style={"color":"#CCE5FF"}),
+	            	html.H3(children=[tests_until_today,html.H6('\u0020'+'\u0020'+'\u2191'+str(delta_tests), style={"display":"inline"})]),
+	            	], 
+	            	style={"color":"#CCE5FF"}),
 	        ], style={'background-color': 'black'})
 	        ])
 		return panel

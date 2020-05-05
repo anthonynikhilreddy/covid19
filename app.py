@@ -56,10 +56,6 @@ external_stylesheets = [
         'integrity': 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh',
         'crossorigin': 'anonymous'
     },
-    {
-        'href': 'https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
-        'rel': 'stylesheet'
-    }
 ]
 
 response = requests.get("https://api.covid19india.org/data.json")
@@ -67,7 +63,7 @@ todos = json.loads(response.text)
 
 statelist=[]
 todos['statewise'][0]['state']='INDIA'
-for i in range(0,len(todos['statewise'])):
+for i in range(1,len(todos['statewise'])):
     statelist.append(todos['statewise'][i]['state'])
 app = dash.Dash(__name__,assets_folder=STATIC_DIR,
                 external_scripts=external_scripts,
