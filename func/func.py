@@ -158,7 +158,7 @@ class func:
 	            	], 
 	            	style={"color":"gray"}),
 	            html.Div(children=[
-	            	html.H6("Recovries until today:", style={"color":"green"}),
+	            	html.H6("Recoveries until today:", style={"color":"green"}),
 	            	html.H3(children=[recovered_until_today,html.H6('\u0020'+'\u0020'+'\u2191'+delta_recovered_until_today, style={"display":"inline"})]),
 	            	], 
 	            	style={"color":"green"}),
