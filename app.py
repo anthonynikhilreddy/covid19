@@ -55,9 +55,10 @@ navbar = html.Nav(className="navbar navbar-expand-lg navbar-light bg-light justi
     html.A(className="navbar-brand",children=['Covid-19 Tracker'], href='#', style={'font-size':'200%'}),
         html.Ul(className="navbar-nav ml-auto",children=[
             html.Li(className='d-none d-md-block nav-item active', children=[
-                html.A(children=[html.H3("Spring Boot Version"),html.H6("By Abhinav")],className='nav-link', href="https://knowcovid19india.herokuapp.com/")], style={'font-size':'150%'}),
+                html.H3("Team Avengers",style={'font-size':'150%'}),
             ])
-    ])
+    ])])
+
 
 response = requests.get("https://api.covid19india.org/data.json")
 todos = json.loads(response.text)
