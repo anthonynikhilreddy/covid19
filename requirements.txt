@@ -17,7 +17,7 @@ dash-html-components==1.0.3
 dash-react-table==0.0.3
 dash-renderer==1.4.0
 dash-table==4.6.2
-Django==3.0.5
+Django==3.1.9
 djangorestframework==3.11.0
 Faker==4.0.3
 Fiona==1.8.13.post1
